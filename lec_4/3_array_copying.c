@@ -27,9 +27,12 @@ int main(int argc, char *argv[])
 	int c=1,d=0;
 	// memcpy(c,d,sizeof(c));
 	memcpy(&c,&d,sizeof(c));
-
 	printf("%d\n", c);
 
+	memmove(a+1,a, 2*sizeof(int));
+	for (int i=0;i<3;i++)
+		printf("%d\t", a[i]);
+	printf("\n");
 
 	return 0;
 }
