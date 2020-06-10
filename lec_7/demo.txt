@@ -1,0 +1,39 @@
+
+
+unsigned char i = 3;
+unsigned char j = 2;
+
+0000 0011    i
+0000 0010    j
+
+0000 0010 2  &
+0000 0011 3  |
+
+0000 0001 1  ^
+
+
+i ~  1111 1100
+
+i << 1  0000 0110  6  = 3 times 2
+left shit is equalent to time 2
+
+
+1 >> i  0000 0001  1  = int (3) / 2
+
+
+0000 0011 
+
+
+0000 0001  &  get the fisrt bit    2^0  1 < 0
+	
+0000 0010	  get the second bit  2^1	1 < 1
+0000 0100						2^2		1 < 2
+			
+
+
+1000 0000
+
+if !(&) '0' 
+ 
+if ( &)
+'1'
