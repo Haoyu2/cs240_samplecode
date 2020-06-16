@@ -12,7 +12,7 @@ all: $(client)
 $(client) : $(objects)
 	gcc $(FLAGS) $^ -o $@
 
-objs/%.o : %.c 
+%.o : %.c 
 	gcc -c $(FLAGS) $< -o $@
 	
 clean: $(client) 
