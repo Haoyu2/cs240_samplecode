@@ -9,6 +9,11 @@ void f_eg1()
 
 	int **arr = malloc(nrow*sizeof(int *));
 
+	if(arr==NULL){
+		fprintf(stderr,"%s\n"," FunctionPointer.c: f_eg1: arr");
+	}
+
+
 	for (int i = 0; i < nrow; ++i)
 	{
 		// arr[i] <==> *(arr+i) is int pointer has not yet
@@ -270,7 +275,10 @@ void testFP()
 
 
 
-	f_eg6();
+	// f_eg6();
 	// printf("Hello, this is a snippet.\n");
+
+	// char *s = NULL;
+	// TEST_NULL(s,"FunctionPointer:testFP:s")
 
 }

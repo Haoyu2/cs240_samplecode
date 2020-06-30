@@ -5,13 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-// struct point
-// {	
-// 	int x,y;
-// 	char *s;
-	
-// };
-// typedef struct point Point;
+
+#define TEST_NULL(p,s) 	\
+		if (NULL==p){		\
+			fprintf(stderr, "%s:NULL POINTER EXCEPTION\n", s);\
+			exit(1);}
+
+
+
+
+
+
 
 
 typedef struct point{
@@ -19,11 +23,22 @@ typedef struct point{
 	char *s;
 }Point;
 
+typedef struct student
+{	
+	char *name;
+	char *id;
+	double grades;
+} Student;
+
+
+
+
 
 void testingPointer();
 void testDynam();
 
 void testFP();
+void testStruct();
 
 
 

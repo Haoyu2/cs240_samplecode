@@ -1,6 +1,8 @@
 client = client
 objects = Client.o  Recursion.o Sort.o Random.o pointer.o \
-			DynamicAllocation.o FunctionPointer.o
+			DynamicAllocation.o FunctionPointer.o Struct.o \
+			Array.o
+
 FLAGS = 
 
 
