@@ -101,7 +101,7 @@ void *q3(DIMENSION dim, ...) {
 				for (int j=0;j<n;j++)
 					((int**) arr)[i][j] = 1;
 			}
-			return arr;
+			return (void *) arr;
 	}	
 	
 }
@@ -151,6 +151,9 @@ char q5(char ch) {
 // Question 5: Encription (20 Points)
 
 
+"{()}[]"
+
+
 int q6(char *s){
 
 	int i=0,j=0;
@@ -177,9 +180,9 @@ int main(void){
 
 
 	test_q3();
-	test_q4();
+	// test_q4();
 	test_q5();
-	test_q6();
+	// test_q6();
 
 
 
@@ -242,6 +245,8 @@ void test_q4(void){
 
 void test_q5(void){
 	printf("%c\n", q5('k'));
+	printf("%c\n", q5('a'));
+
 }
 
 
