@@ -286,7 +286,7 @@ NodeL*  mergeSortNL(NodeL *node,int (*cmp)(const void *a, const void *b))
 
 	if (node==NULL || node->next ==NULL) return node;
 	NodeL *mid = midNodeL(node);
-	NodeL *p =mid.next; mid.next = NULL;
+	NodeL *p =mid->next; mid->next = NULL;
 	node = mergeSortNL(node,cmp); p = mergeSortNL(p, cmp);
 	return mergeNLIter(node,p, cmp);
 
@@ -295,10 +295,49 @@ NodeL*  mergeSortNL(NodeL *node,int (*cmp)(const void *a, const void *b))
 
 void mergeSortLL(LinkedList *l,int (*cmp)(const void *a, const void *b))
 {
-	mergeSortNL(l->root, cmp);
+	l->root = mergeSortNL(l->root, cmp);
 }
 
 
+
+void testMergeLL()
+{
+
+	int len = 50000;
+	// an empty integer linkedlist
+	LinkedList li = {sizeof(int),0,NULL};
+	double time_spent = 0.0;
+
+	clock_t begin = clock();
+
+	for(int i=len;i > 0;i--){
+		addLL(&li, &i);
+	}
+
+	// showIntLL(li);
+
+	// mergeSortLL(&li, cmpInt);
+	// showIntLL(li);
+
+
+
+
+
+
+	// the function time to be measured
+
+	mergeSortLL(&li,cmpInt);
+	clock_t end = clock();
+
+
+	time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+
+	printf("MergeSort: Time elpased is %f seconds\n", time_spent);
+
+
+
+
+}
 
 
 
@@ -308,10 +347,68 @@ void mergeSortLL(LinkedList *l,int (*cmp)(const void *a, const void *b))
 void testLL()
 {
 
-	testMidNodel();
+	// testMergeLL();
+	testAddLLA();
+
+	// testMidNodel();
 	// testMergeNLIter();
 
 	// testMergeNL();
 	// testAddLL();
 	// printf("Hello, this is a snippet.\n");
+}
+
+
+
+
+void addLLA(LinkedListArray *l, void *item)
+{
+	
+	if (item==NULL || l==NULL) return;
+	l->size_n++;
+	
+
+	if (l->root==NULL) 
+	{
+		l->len = 8;
+		l->root = malloc(8*sizeof(NodeL));
+		l->root->item = malloc(l->size);
+		memcpy(l->root->item, item, l->size);
+		l->root->next = NULL;
+		return;
+
+	}else if (l->size_n >= l->len)
+ 	{	
+ 		l->len *= 2;
+ 		l->root = realloc(l->root, l->len*sizeof(NodeL));
+ 		printf("len%d\n", l->len);
+	}
+
+	NodeL *last = l->root + l->size_n - 1; 
+	last->item = malloc(l->size);		
+	memcpy(last->item, item, sizeof(NodeL));
+	last->next = NULL;
+
+	NodeL *p = l->root;
+	while (p->next != NULL) p = p->next;
+	p->next = last;
+
+}
+
+
+
+
+
+void testAddLLA()
+{
+	int len = 200;
+	// an empty integer linkedlist
+	LinkedListArray li = {sizeof(int),0,0,NULL};
+
+	for(int i=0;i< len;i++){
+		addLLA(&li, &i);
+	}
+	LinkedList l = {sizeof(int),li.size_n, li.root};
+	// showIntLL(l);
+
 }

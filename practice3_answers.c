@@ -9,15 +9,19 @@
 /*
     1.1.1. 	argc = 2
         
-    1.1.2.  2's complement of -argc
-        1111 1111 1111 1111 1111 1111 1111 1110
+    1.1.2.  2's complement of -
+        
+        1000 0000 0000 0000 0000 0000 0000 0010
+        1111 1111 1111 1111 1111 1111 1111 1101 1's complement
+                                            +   1
+        1111 1111 1111 1111 1111 1111 1111 1110 2's complement
         (32-bit int)
     
     1.2.1
-            #define MIN(X,Y) ((x) < (y) ? x : y)
+            #define MIN(X,Y) ((X) < (X) ? X : Y)
 
     1.2.2
-            #define MUL(X,Y) (x) * (y)
+            #define MUL(X,Y) (X) * (Y)
 
 */
 
@@ -130,10 +134,14 @@ typedef struct
     double *row_sum, *col_sum, average;
 } Mat;
 
+
+// mat is passed by value
 Mat createMat(Matrix mat)
 {
     Mat m;
-    m.mat = &mat;
+    m.mat = malloc(sizeof(Matrix));
+    memcpy(m.mat, &mat, sizeof(Matrix));
+
     m.row_sum = calloc(mat.height, sizeof(double));
     m.col_sum = calloc(mat.width, sizeof(double));
     double sum = 0;
@@ -156,11 +164,18 @@ Mat createMat(Matrix mat)
 
 // Q5
 
+
+// a, b are reference to Mat variables
 int com_Mat(const void *a, const void *b)
 { // compares pointers to mats
 
-    const Mat *ma = a;
-    const Mat *mb = b;
+    const Mat *ma = (Mat *) a;
+    const Mat *mb = (Mat *) b;
+
+    // return ma->average - mb->average; // wrong
+
+    // beacause for doube 0.1 and -0,1, when typecast to int 
+    // they become zero
 
     if (ma->average < mb->average)
     {
@@ -176,14 +191,16 @@ int com_Mat(const void *a, const void *b)
     }
 }
 
+
+// a and b are references to the references of Mat vaiables
 int com_PMat(const void *a, const void *b)
 {
     return com_Mat(*(Mat **)a, *(Mat **)b);
 }
 
 typedef union {
-    unsigned int val;
-    unsigned char c;
+    unsigned int val;  // 4 bytes
+    unsigned char c;   // 1 byte
 } IP;
 
 void q5(void)
@@ -191,9 +208,29 @@ void q5(void)
     IP ip;
     ip.val = 0x0A0B0C0D;
     // ip.c: 0x0A (or 10 in decimal)
+
+    printf("%x\n", ip.c);
+    //0xA   10
+    //0xD
 }
 
 // Q6
+
+
+
+// 
+
+// node0->
+//  node1 -> node2 ->node3
+
+// 0,1 
+// node2 ->node1 -> node3 node2 returned
+
+// 1, 2
+//  node1 -> node3 ->node1  node1 returned
+
+
+
 
 typedef struct list_node
 {
@@ -289,18 +326,22 @@ void printLinkedList(ListNode *start){
 
 int main(int argc, char *argv[])
 {
-    char s[] = "hello -wed,yes  ok right";
-    printf("%s\n", capitalize(s));
-
-    char *str = "  hello world!   I am   fine!  !!  ";
-    printf("%s\n", str);
+    
+    q5();
 
 
-    Words words = split(str, ' ');
-    for (int i = 0; i < words.num; i++)
-    {
-        printf("%d:%s\n", i, words.words[i]);
-    }
+    // char s[] = "hello -wed,yes  ok right";
+    // printf("%s\n", capitalize(s));
+
+    // char *str = "  hello world!   I am   fine!  !!  ";
+    // printf("%s\n", str);
+
+
+    // Words words = split(str, ' ');
+    // for (int i = 0; i < words.num; i++)
+    // {
+    //     printf("%d:%s\n", i, words.words[i]);
+    // }
 
 
     int arr[5] = {1,2,3,4,5};

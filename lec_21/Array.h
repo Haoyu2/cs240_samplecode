@@ -182,16 +182,19 @@ void testLL();
 
 
 
-
-typedef struct ll
+// 
+typedef struct 
 {
+	// size is data type
+	// size_n is number of nodes(item)
+	// len it capability
 	int size, size_n, len;
 	NodeL *root;
 }LinkedListArray;
 
 
-
-
+void addLLA(LinkedListArray *l, void *item);
+void testAddLLA();
 
 
 
