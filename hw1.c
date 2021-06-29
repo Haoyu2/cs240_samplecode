@@ -12,8 +12,8 @@
 /**
  * @brief return the sysmetric index of a given index if an array
  * @details 
- *          for [1,2,3], the 0th sysmetric index is 3th
- *          for [1,2,3,4], the 0th sysmetric index is 4th           
+ *          for [1,2,3], the 0th sysmetric index is 2th
+ *          for [1,2,3,4], the 0th sysmetric index is 3th           
  * 
  * @param arr integer array
  * @param len length
