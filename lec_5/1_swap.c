@@ -22,6 +22,8 @@ void swap(int a, int b){
 void incre(int a[], int len){
 	for (int i=0;i<len;i++)
 		a[i] += 1;
+
+	// printf("%lu", sizeof(a));
 }
 
 int main(int argc, char *argv[])
@@ -34,9 +36,12 @@ int main(int argc, char *argv[])
 
 	int c[] = {1, 2, 3};
 
-	for (int i=0;i<3;i++)
-		c[i] += 1;
-	incre(c, 3);
+
+	incre(c, sizeof(c)/sizeof(int));
+
+	// for (int i=0;i<3;i++)
+	// 	c[i] += 1;
+	// incre(c, 3);
 
 	for (int i=0;i<3;i++)
 		printf("%d\t", c[i]);;

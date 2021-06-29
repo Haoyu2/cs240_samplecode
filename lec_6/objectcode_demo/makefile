@@ -1,14 +1,14 @@
 client = client
-objects = string.o math.o client.o
+objects = string.o math.o 
 FLAGS = -Wall
 
 
 $(client) : $(objects)
-	gcc $(FLAGS) $^ -o $@
+	gcc $(FLAGS) client.c -o $@ $^
 %.o : %.c
-	gcc -c $(FLAGS) $< -o $@
+	gcc -c $(FLAGS) $< -o $@ 
 clean:
 	rm $(client) $(objects)
 
-mylib :  $(objects)
-	ar crs libmylib.a *.o
+run :$(client)
+	

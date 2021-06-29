@@ -31,7 +31,7 @@ int i = 3;
 int main(int argc, char *argv[])
 {
 	char right[] ="hello";
-	printf("%s\n", YES);
+	printf("%s\n", YES); // YES -> right and right is a string
 	printf("YES\n");
 	printf("%f\n", PI);
 	PRINTHELLO

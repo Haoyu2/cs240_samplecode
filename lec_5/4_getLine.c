@@ -11,12 +11,13 @@
 int getLineNum(){
 
 	int count = 0, c=0, c1;
-	while ((c=getchar())!=EOF){
+	while ((c=getchar())!= EOF){
 		if (c=='\n')
 			count++;
 		c1 = c;
 	}
 
+	// the last line may not have a new line character
 	if (c1!='\n') count++;
 
 	return count;
@@ -56,10 +57,18 @@ int getLine(char s[], int lim){
 //  h e l l o      5
 
 
+double PI = 3.1415926;
+
+
 int main(int argc, char *argv[])
 {
 
-	// printf("%d\n", getLine());
+	printf("%g\n",PI );
+
+	// printf("%d\n", getLineNum());
+
+
+
 
 	// EOF is symbolic constant -1 defined in <stdio> to indicate the 
 	// end of file. 
@@ -67,9 +76,11 @@ int main(int argc, char *argv[])
 
 	// printf("%d\n", maxLine());
 
-	int lim = 22;
-	char s[lim];
-	printf("%d\n", getLine(s,lim));	
+	// int lim = 22;
+	// char s[lim];
+	// getLine(s,lim);
+	// printf("%s\n", s);	
+
 
 	return 0;
 }

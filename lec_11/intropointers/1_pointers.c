@@ -14,6 +14,21 @@ int main(int argc, char *argv[])
 	// p is a pointer and it stores an address value
 	// declaraion doen't give it an initial address value
 	int *p;
+	int *p1;
+
+	// printf("%d\n", *p);// wrong
+
+	p = &i;// initialization, p reference to i
+
+	// printf("%d\n", *p);// correct
+	
+	// printf("%p\n", p);
+	// printf("%p\n", &p);
+	// printf("%p\n", &p1);
+
+
+
+
 
 
 // suposs &p= 0x7fffe5327750
@@ -50,29 +65,59 @@ int main(int argc, char *argv[])
 
 
 	
-	printf("%p\n", &p);
-	printf("%p\n", p);
-	printf("%d\n",*p );
+	// printf("%p\n", &p);
+	// printf("%p\n", p);
+	// printf("%d\n",*p );
 
 
-	printf("%p\n", &i);
+	// printf("%p\n", &i);
 
-    p = &i;
+ //    p = &i;
     // agter this *p is same as i
 
 // when we use i, it is equvalent to *(&i)
 
-	printf("%d\n", *p);
-	printf("%p\n", p);
+	// printf("%d\n", *p);
+	// printf("%p\n", p);
 
 
 	int a[10]= {3,-1};
+
+	printf("%p\n", a);
+	printf("%p\n", &a[0]);
+
+	printf("%d\n", a == &a[0]);
+
+	printf("%p\n", &a[1]);
+
+	printf("%p\n", a + 1);//address of the second element in a
+
+	printf("%d\n",*(a + 1));
 
 
 	// a is just constant pointer it stores address value
 
 	printf("%d\n", *a + 1);
-	printf("%d\n", *(a + 1));
+	// printf("%d\n", *(a + 1));
+
+	// printf("%p\n", a++);wrong
+
+
+	// printf("%d\n", a[-1]);// even legal but should not do that
+
+
+
+	// char amessage[] = "1234"; /* an array */
+	// char *pmessage = "1234"; /* a pointer */
+
+	// printf("%p\n",amessage);
+	// printf("%p\n",&pmessage);
+
+	// printf("%p\n",pmessage);
+
+	char *lineptr[3];
+	lineptr[0] = "hello";
+
 
 
 	return 0;

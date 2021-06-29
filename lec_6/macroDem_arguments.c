@@ -40,34 +40,37 @@
 // 	return x*x;
 // }
 
-
+//ter
+//syntax   expression1 ? exp2 : exp3
 
 
 int main(int argc, char *argv[])
 {
 
-// /************************************************/
+	// printf("%d\n", 1 < 2 ? 1 : 2);
 
-	// printf("max(1,2) is %d\n", max(1,2));
-// 	// this is equivalent to 
-	// printf("%d\n", ((1) > (2) ? (1) : (2)));
-// 	// which is different from function call since 
-// 	// there are no stack frame gets created and destroyed 
-// 	//  this is just an statement
+/************************************************/
+
+	printf("max(1,2) is %d\n", max(1,2));
+	// this is equivalent to 
+	printf("%d\n", ((1) > (2) ? (1) : (2)));
+	// which is different from function call since 
+	// there are no stack frame gets created and destroyed 
+	//  this is just an statement
 	
-// **********************************************
+/**********************************************/
 
 
-// 	int i=1,j=2;
-// 	// Be careful about what happens for compound expressions
-// 	printf("max(i++,j++) is %d\n", max(i++,j++));
-// 	printf("j is %d\n", j);
+	// int i=1,j=2;
+	// Be careful about what happens for compound expressions
+	// printf("max(i++,j++) is %d\n", max(i++,j++));
+	// printf("j is %d\n", j);
 
-// 	printf("square(2)   is %d\n", square(2));
-// 	printf("square_1(2) is %d\n", square_1(2));
+	// printf("square(2)   is %d\n", square(2));
+	// printf("square_1(2) is %d\n", square_1(2));
 	
-	printf("square(1+1)   is %d\n", square(1+1));
-	printf("square_1(1+1) is %d\n", square_1(1+1));
+	// printf("square(1+1)   is %d\n", square(1+1));
+	// printf("square_1(1+1) is %d\n", square_1(1+1));
 
 	// square_1(1+1) <==> 1+1 * 1+1  = 3 // unexpected error
 	// square(1+1)　<==> (1+1) * (1+1) = 4
@@ -81,23 +84,25 @@ int main(int argc, char *argv[])
 
 	dprint(5.0/2);
 	printf("5.0/2" " = %g\n", 5.0/2);
-// 	// equivalent to printf("x/y" " = %g\n", x/y);
-// 	// And the two strings get concatenated
+	// equivalent to printf("x/y" " = %g\n", x/y);
+	// And the two strings get concatenated
 
-// 	// or this way
+	// or this way
 
-	// #define dprint1(expr) printf( "%s = %g\n",#expr, expr)
-	// dprint1(5.0/2);
+	#define dprint1(expr) printf( "%s = %g\n",#expr, expr)
+	dprint1(5.0/2);
 /************************************************/
 
 	// ## operator
 	#define concat(front, second) front ## second
-	char *concat(name,1) = "Yeah";
+	char *concat(name,1) = "Yeah";// define name1 = "Yeah"
 
 	// char *name1 = "Yeah";
 	printf("%s\n", name1);
 
 	assert(name1=="Yeah");
 
-// 	return 0;
+	assert(0);
+
+	return 0;
 }

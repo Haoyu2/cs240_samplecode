@@ -5,7 +5,140 @@
 */
 
 #include "pointer.h"
+#include <stdlib.h>
+#include <string.h>
 
+
+//How to return an array
+
+// 1. we can not use int/char [] as return type syntactically rules
+
+	// array will take stack memory 
+	// then the array can be over-written when this function stack exits and
+	// another function stack executes
+	
+// 1.1,  this is the another reason that c doesnot return array
+        // this is also the motivation for heap memory management
+// 
+
+// Summary. we should not return an array
+// Solutuion:
+	//  1. Manipulate array in place
+	//  2. Use heap memory for return an array
+//
+// for passing an array into a local function, wehave to use a seperate
+// variable for its length
+void printArray(int arr[], int len){
+	for (int i = 0; i < len; ++i)
+	{
+		printf("%d\t", arr[i]);
+	}
+	printf("\n");
+}
+
+
+// 
+// int [] eg01(int len){
+
+// 	int a[len] = {1,2};
+// 	return a;
+// }
+
+
+int * eg02(int len){
+
+
+	// array will take stack memory 
+	// then the array can be over-written when this function stack exits and
+	// another function stack executes
+	// the reason
+	int a[len];
+	a[0] = 1;
+	a[1] = 2;
+	a[2] = 3;
+	int* ap = a;
+	return ap;
+	//return a;// we can not return an array, returns address of local variable
+}
+// this is the correct way to return an newly created array
+
+int * eg03(int len){
+
+	// this the heap memory
+	// int * a = (int *) malloc(4*len);
+	int * a = (int *) calloc(len, 4);
+	// number of objects and the size of each object
+
+	a[0] = 1;
+	a[1] = 2;
+	a[2] = 100;
+	int* ap = a;
+
+	printf("local a:\t\t%p\n", a);
+	return a;
+}
+
+
+
+void helper_eg0(){
+	int a[100];
+	for (int i = 0; i < 100; ++i)
+	{
+		a[i] = -1;
+	}
+}
+
+void eg01_test(){
+	int len = 3;
+	// eg01(len);
+	// printArray(eg01(len), len);
+
+	int* pa = eg02(len);
+	printArray(pa, len); // this works but 
+	helper_eg0();
+	printArray(pa, len); // this works but 
+	
+
+}
+
+void eg03_test(){
+	int len = 3;
+	// eg01(len);
+	// printArray(eg01(len), len);
+
+	int* pa = eg03(len);
+	printArray(pa, len); // this works but 
+	helper_eg0();
+	printArray(pa, len); // this works but 
+	printf("calling stack pa:\t%p\n", pa);
+
+
+	free(pa); 
+	// pa retain the address, however it is not legal safe anymore
+	// the memory it owned now avaiable for other functions or programs
+	printf("After free:\t%p\n", pa);
+
+	printf("1%d", pa[0]);
+	printArray(pa, len); 
+	
+
+}
+
+
+
+
+void swap(int *a, int *b){
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+void swap_test(){
+	int a=1, b=2;
+	printf("a:%d, b:%d\n", a, b);
+	swap(&a, &b);
+	printf("a:%d, b:%d\n", a, b);
+}
 
 
 // pointer as reference to primitive data types
@@ -23,28 +156,54 @@ void eg2()
 {
 
 	int a[] = {1,2,3};// 3* 4 12 bytes
+
+
 	char s[] = "Hello, this is a snippet.";
 
-	char s1[] = {'A', 'B', 'C'};// 4 bytes
-
-	//how many memory allocated for s1
+	printf("len of s:%lu\t memory of s:%lu\n", strlen(s),sizeof(s));
 
 
-	char *sp = "Hello, this is a snippet.";
 
-	printf("%p\n", a);
-	printf("%p\n", s1);
-	printf("%p\n", s);
+	// char s1[] = {'A', 'B', 'C'};// 3 bytes and there is no '\0' and dangerous
+
+	char s2[] = {'A', 'B', 'C', '\0'};
+	char *p1 = malloc(strlen(s2) + 1); 
+
+	// printf("%s\n", s1);
+
+	printf("%s\n", s2);
 
 
-	char *sp1 = malloc(10);
+	printf("%s\n", strcpy(p1, s2));
 
 
-	printf("%p\n", sp);
+	// //how many memory allocated for s1
 
-	// sp[1] = 'c';
 
-	printf("%p\n",sp1 );
+
+	char *sp = malloc(100);
+	// heap being allocated to sp with 100 bytes
+	// then sp gets updated to point to a const string pointer 
+	// which is in the data segment
+
+	// once you are trying update a heap pointer and the heap memory
+	// is no longer used, we should free that memory before 
+	// changing and updating the heap pointer. 
+
+	// char *sp1 = sp;
+
+	printf("stack address:\t%p\n", a);
+	printf("heap address:\t%p\n", sp);
+	free(sp);
+
+	// will this string initial the sp memory
+	sp = "Hello, this is a snippet.";
+	// a constant string a const char pointer
+
+	printf("data segment address:%p\n", sp);
+
+	// sp[1] = 'M'; // this is updating a const string, will casuse crash
+
 
 
 }
@@ -56,6 +215,7 @@ void eg2()
 void eg3()
 {
 	const int a=1;
+
 	int const b=2;
 
 	// a = 2;
@@ -64,26 +224,28 @@ void eg3()
 	
 	*/
 
-	//1. const pointer vaiable
+	// 1. const pointer vaiable
 
 	int c=-1, d=-2;
 
 	int * const pc=&c;
-	// pa =&d;
-	*pc = 2;
-	printf("c%d\n", c);
 
-	//2 const pointer variable reference
+	// pc = &d;// verify if the pointer is const
+	*pc = 2;// verify if the value is const
+	printf("c:%d\n", c);
+
+	//2  const values 
 
 	int const *p = &d;//*p is immutable
 	// *p = 2;// wrong
-	d = 2;
-	printf("*p%d\n", *p);
-
 	// *p = a;// wrong
+	d = 2;
+	printf("*p:%d\n", *p);
 
 
-	// const pointer variable and its reference
+
+
+	// 3 const pointer variable and its reference
 
 	int const * const pa=&d;
 
@@ -95,10 +257,65 @@ void eg3()
 
 	// peculiar example
 
-	// int *pp = &a;
-	// *pp= -2;
-	// printf("a%d\n", a);
+	// const int x = 10;
 
+	// int *px = &x;
+	// *px= -2;
+	// // x = 11;// this is not working
+	// printf("x: %d\n", x);
+
+	// const int arr[] = {1,2,3}; 
+	// const int arr1[] = {4,5,6};
+
+	// const int * p_arr = arr;
+	// p_arr = arr1;
+	// // arr[1] = 2;
+	// for (int i = 0; i < 3; ++i)
+	// {
+	// 	printf("%d\t", arr[i]);
+	// }
+
+	// for (int i = 0; i < 3; ++i)
+	// {
+	// 	printf("%d\t", p_arr[i]);
+	// }
+
+
+	// int * p_arr_mutablable = arr;
+	// p_arr_mutablable[1] = 10;
+
+	// printf("\n");
+	// for (int i = 0; i < 3; ++i)
+	// {
+	// 	printf("%d\t", arr[i]);
+	// }
+
+
+
+	char ss1[20], ss2[] = "That great!";
+
+	printf("ss1:%s\n", strncpy(ss1, ss2, 4)); 
+
+	printf("ss1:%s\n", ss1); 
+	printf("ss1+ss2:%s\n", strcat(ss1, ss2)); 
+
+	char *sss = calloc(sizeof(ss1) +sizeof(ss2), 1);
+
+	printf("sss:%s\n", sss); 
+
+
+	// cannot use when ss1 and ss2 is define in the argument
+	// char *sss = malloc(strlen(ss1) + strlen(ss2) + 2);
+	// this is safe statement but be careful about the null char
+
+	strcat(sss, ss1);
+	printf("sss:%s\n", strcat(sss, ss2));
+
+	// sss is copy of the contenation of ss1 and ss2
+
+	printf("ss2 starting with g:%s\n", strchr(ss2, 'g'));
+
+	printf("%ld\n", strchr(ss2, 'g') - ss2);
 
 
 
@@ -134,7 +351,7 @@ void eg4()
 	printf("\n%p\n",pb);
 	printf("%p\n",pb+1);
 
-	//(ox) b0 - a8 = b*16-a*16 - 8 = 16 - 8 =8
+	//(ox) b0 - a8 = b*16-a*16 - 8 = 16 - 8 = 8
 
 	char c;
 	char *pc = &c;
@@ -143,7 +360,11 @@ void eg4()
 	printf("%p\n",pc+1);
 	// 1 bytes
 
+
+
 }
+
+
 
 
 
@@ -270,5 +491,10 @@ void eg7()
 
 void testingPointer(){
 
-	eg7();
+	eg3();
+	// swap_test();
+	// eg01_test();
+	// eg03_test();
+	// printf("Hello!\n");
+	// eg7();
 }

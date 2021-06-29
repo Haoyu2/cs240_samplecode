@@ -5,7 +5,6 @@
 */
 
 #include <stdio.h>
-#include "lec8.h"
 #include "pointer.h"
 
 
@@ -14,6 +13,7 @@
 int main(int argc, char *argv[])
 {
 
+	int i, j, k;
 
 	testingPointer();
 	return 0;

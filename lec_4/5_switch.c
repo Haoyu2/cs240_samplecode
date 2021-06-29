@@ -52,13 +52,29 @@ int main(int argc, char *argv[])
 		if (i==3) continue;
 		printf("%d\t", i);
 	}
+	// printf("\n");
+
+	// int xx = 0, arr[] = {1,2};
+
+	// for (int i=0, j = 0; i<5;i++){
+
+	// 	if (i==3) break;
+	// 	printf("%d\t", i);
+	// }
+
 	printf("\n");
-
-	for (int i=0; i<5;i++){
-
-		if (i==3) break;
-		printf("%d\t", i);
+	for (int i = 0; i < 26; ++i)
+	{
+		printf("%c\t", 'A' + i);
 	}
+
+	char c = 'A';
+
+	if (c >= 'A' && c <= 'Z')
+		printf("This is an upper case character!");
+
+
+
 
 
 	return 0;

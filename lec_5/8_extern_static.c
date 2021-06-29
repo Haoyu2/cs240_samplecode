@@ -7,12 +7,10 @@ static float pi = 3.14;
 
 float getPi(){
 
-
-
 	return pi;
 }
 
 
-float area(float radus){
+float area(float radius){
 	return 2*pi*radius;
 }
