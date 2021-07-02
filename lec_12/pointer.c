@@ -208,7 +208,20 @@ void eg2()
 
 }
 
+void getBinary(unsigned num)
+{
+	int j=1; int k=1;
+	for(int i=sizeof(num)*8-1;i>=0;i--){
+		
+		if (num & j<<i) 
+			putchar('1');
+		else
+			putchar('0');
 
+		if ((k++ % 8)==0)  putchar(' ');
+	}
+	printf("\n");
+}
 // const key word 
 // 
 
@@ -299,7 +312,15 @@ void eg3()
 	printf("ss1:%s\n", ss1); 
 	printf("ss1+ss2:%s\n", strcat(ss1, ss2)); 
 
+
+
+
+
+	// sss is asked for store a copy of concatenation of s1 s2
+	//
 	char *sss = calloc(sizeof(ss1) +sizeof(ss2), 1);
+
+
 
 	printf("sss:%s\n", sss); 
 
@@ -318,8 +339,141 @@ void eg3()
 	printf("%ld\n", strchr(ss2, 'g') - ss2);
 
 
+	printf("\n=========\n");
+	// s1 = "aaa"; res = "s"; delete all duplicates of letters
+	// res = malloc(strlen(s1))
+	// res1 = malloc(strlen(res))
+	// free(res) return res1
+
+	char *s1 = malloc(4);
+	// s1 = "aaa"; // this wrong for string copy this rereference
+	memcpy(s1, "aaa", 4);
+	strcpy(s1, "aaa");
+
+	printf("%s\n", s1);
+
+	char *res = malloc(strlen(s1)+1);
+
+	strcpy(res, "a");
+	printf("%s\n", res);
+
+	// realloc K&R stardard uses new memory, newer version 
+	// uses the same meory, 
+	printf("before realloc:%p\n", res);
+	res = realloc(res, 2);
+	printf("after: %p\n", res);
+
+
+	//  "abc" 
+	//   "c":  "abc"
+	//   "b":   "ab"   
+
+	printf("%lu\n", strspn("abc", "c"));
+	printf("%lu\n", strspn("abc", "ab"));
+	printf("%lu\n", strspn("abc", "d"));
+
+// 
+	printf("\n%lu\n", strcspn("abc", "c"));
+	printf("%lu\n", strcspn("abc", "ab"));
+	printf("%lu\n", strcspn("abc", "d"));
+
+	printf("\n%s\n", strpbrk("abc", "c"));
+	printf("%s\n", strpbrk("abc", "ab"));
+	// printf("%s\n", strpbrk("abc", "d"));
+	// for no occurences happens null pointer gets returned
+
+
+	printf("%p\n", NULL);
+
+	printf("%d\n", NULL == strpbrk("abc", "d"));
+
+	printf("%lu\n",strlen(s1));
+
+//      "abc, cba"
+
+	// char *each;
+	// char text[] = "abc, def, hijk";
+
+	// char * text_copy = malloc(strlen(text) + 1);
+
+	// strcpy(text_copy, text);
+
+
+	// printf("%s\n",text);
+
+	// // each=strtok(text, ",") ;
+
+
+	// while ((text_copy=strtok(text_copy, ",")) != NULL)
+	// 	printf("%s\n", text_copy);
+
+
+	char arr1[4];
+	memset(arr1, 1, 4);
+	for (int i = 0; i < 4; ++i)
+	 {
+		printf("%d\t",arr1[i]);
+
+	 } 
+
+ 	int arr2[4];
+	memset(arr2, 1, 4*4);
+	for (int i = 0; i < 4; ++i)
+	 {
+		getBinary(arr2[i]);
+		printf("%d\t",arr2[i]);
+
+	 } 
+
+
+	 printf("\n%g\n", atof("-12.1"));
+ 	 printf("\n%d\n", atoi("ab-1a2b"));
 
 }
+
+
+
+
+void demo_strtok()
+{
+	char *each;
+	char text[] = "abc, def, hijk";
+
+	char * text_copy = malloc(strlen(text) + 1);
+
+	strcpy(text_copy, text);
+	// printf("%s\n", text_copy);
+
+
+	printf("%s\n",text);
+
+	each=strtok(text, ", ") ;
+	printf("%s\n", each);
+
+
+	while ((each=strtok(NULL, ", ")) != NULL)
+		printf("%s\n", each);
+
+
+	printf("%s\n",text); // original string gets modified
+
+	// each=strtok("abc, def, hijk", ",") ;
+
+	// printf("%s\n", text_copy);
+
+	// while ((each=strtok(NULL, ",")) != NULL)
+	// 	printf("%s\n", each);'
+
+	printf("%x", -5);
+
+}
+
+// count how many lowercase letters for a string
+
+// int arr[26]; 'a' : arr[0], 'b': arr[1],...,  
+
+// 'a' : 'a'-'a'  (0)
+// 'b' : 'b' - 'a' (1)
 
 
 
@@ -491,7 +645,9 @@ void eg7()
 
 void testingPointer(){
 
-	eg3();
+	demo_strtok();
+
+	// eg3();
 	// swap_test();
 	// eg01_test();
 	// eg03_test();
