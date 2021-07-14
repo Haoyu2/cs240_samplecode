@@ -514,8 +514,6 @@ void eg4()
 	printf("%p\n",pc+1);
 	// 1 bytes
 
-
-
 }
 
 
@@ -523,12 +521,15 @@ void eg4()
 
 
 
-// Array pointers
+// Array of pointers
 
 
 void eg5()
 {
 	int *p[3];
+
+	//the size of a pointer no matter what data type the pointer is, is solely defined
+	// by the computer's cpu bits 64 bits  8 bytes
 
 /*	
 	1. 	According to precedence table, which operation goes first 
@@ -553,6 +554,19 @@ void eg5()
 
 	int a[3] = {1,2,3};
 
+	p[0] = a;
+	p[0] = &a[0];
+	p[1] = a + 1;
+	p[1] = &a[1];
+
+	printf("*p[0]:%d\n", *p[0]);
+	printf("*p[1]:%d\n", *p[1]);
+	printf("*(p+1):%d\n", *(p[0]+1));
+
+
+//      *p <==> p[0]  
+//      *(p+1) <==> p[1]
+
 	*p = a;// the address of a
 	// *p <==> p[0] p[1] p[2]
 
@@ -573,6 +587,8 @@ void eg6()
 {
 
 	int (*p)[3];
+	
+
 	/*	
 	1. 	According to precedence table, which operation goes first 
 		starting from the variable name?
@@ -603,9 +619,16 @@ void eg6()
 	 
 
 	p = a;
+
 	printf("%p\n",p );
 	printf("%p\n",p+1);
+
+
+
 	//68 - 5c  = 16 + 8 - 12 =  12  3*sizeof(int) = 12 bytes
+
+	// (*p)[1] <==> p[0][1]
+	// (*(p+1))[2] <==> p[1][2]
 
 	printf("%d\n", (*p)[1]);
 
@@ -616,7 +639,7 @@ void eg6()
 
 // The highest dimension does not matter for data type compatability
 // the rest of dimension has to be the same (the bounds have to be clear)
-void helper(int (*a)[2][3])
+void helper(int (*a)[2][3], int len)
 {
 	printf("%d\n", a[0][0][0]);
 }
@@ -632,20 +655,80 @@ void eg7()
 		{ 4,5,6}}
 	};
 
-	helper(a);
+	helper(a, 2);
 
 
 }
 
 
+//multi level pointer heap allocation 
+
+/*
+	declare matrix (nrow,ncol) pointer 
+	allocate heap memory fot this pointer
+
+	make each row to be 1d array of ncol
+
+	so each row is a pointer points to 1d array
 
 
 
 
+
+*/
+
+void eg8()
+{	
+	int ncol=4, nrow = 3;
+
+
+	// {       
+	// 	{ 1,2,3},    // int*
+	// 	{ 4,5,6}.
+	//      {7, 8, 9}
+	// };
+
+
+	// int (*arr)[ncol] = 
+	int ** arr = (int **) malloc(nrow * sizeof(int*));
+	// 24 = nrow * sizeof(int*) = 3 * 8
+
+
+
+	for (int i = 0; i < nrow; ++i)
+	{
+		// arr[i] <==> *(arr+i) is int pointer has not yet
+		// allocated memory for it.
+		arr[i] = (int *) malloc(ncol * sizeof(int));
+		//  16 = ncol * sizeof(int) = 4 * 4
+
+
+		for (int j = 0; j < ncol; j++)
+		{
+			arr[i][j] = j;
+			printf("%d\t", arr[i][j]);
+		}
+		printf("\n");
+	}
+
+	// What would be total heap memory allocated for arr ?
+	//   3*16                    +  3 * 8               =  
+        //  nrow*ncol * (int)         nrow * (int *) 
+        // all integers              all column poniter
+
+	
+//      for release all the heap memory that has been allocated
+	for(int i=0;i<nrow ;i++){
+		free(arr[i]);
+	}
+	free(arr);
+
+}
 
 void testingPointer(){
 
-	demo_strtok();
+	// demo_strtok();
+	eg8();
 
 	// eg3();
 	// swap_test();

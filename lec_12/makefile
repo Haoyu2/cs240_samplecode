@@ -1,5 +1,5 @@
 client = client
-objects = Client.o  pointer.o
+objects = Client.o  pointer.o func_pointer.o
 FLAGS = 
 
 
