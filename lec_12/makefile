@@ -1,5 +1,6 @@
 client = client
-objects = Client.o  pointer.o func_pointer.o
+objects = Client.o  pointer.o func_pointer.o sortbyother.o \
+arraylist.o
 FLAGS = 
 
 
